@@ -7,12 +7,17 @@ public class DrawLine : MonoBehaviour
     private LineRenderer _lineRenderer;
     private Camera _camera;
     [SerializeField, Min(0.01f)] private float _mousePositionUpdateFreq = 0.1f;
+    [SerializeField] private GameObject _circlePointPrefab;
+    private Transform _circlePoint;
+    private GameObject _circleStartPoint;
     private bool _isDrawing;
 
     private void Awake()
     {
         _lineRenderer = GetComponent<LineRenderer>();
         _camera = Camera.main;
+        _circlePoint = Instantiate(_circlePointPrefab, Vector3.zero, Quaternion.identity).transform;
+        _circleStartPoint = Instantiate(_circlePointPrefab, Vector3.zero, Quaternion.identity);
         StartCoroutine(UpdateMousePosition());
     }
 
@@ -28,6 +33,7 @@ public class DrawLine : MonoBehaviour
             {
                 Vector3 mousePosition = _camera.ScreenToWorldPoint(Input.mousePosition);
                 mousePosition.z = 0;
+                _circlePoint.position = mousePosition;
                 AddPoint(mousePosition);
             }
             else
@@ -43,6 +49,12 @@ public class DrawLine : MonoBehaviour
     {   
         _lineRenderer.positionCount++;
         _lineRenderer.SetPosition(_lineRenderer.positionCount - 1, pointPosition);
+
+        if (!_circleStartPoint.activeSelf)
+        {
+            _circleStartPoint.SetActive(true);
+            _circleStartPoint.transform.position = pointPosition;
+        }
     }
 
     private void CheckLine()
@@ -54,5 +66,6 @@ public class DrawLine : MonoBehaviour
     private void CancelLine()
     {
         _lineRenderer.positionCount = 0;
+        _circleStartPoint.SetActive(false);
     }
 }
