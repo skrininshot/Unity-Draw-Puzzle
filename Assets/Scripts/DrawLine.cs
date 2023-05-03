@@ -25,14 +25,16 @@ public class DrawLine : MonoBehaviour
         _lineRenderer = GetComponent<LineRenderer>();
         _camera = Camera.main;
         string objectName = gameObject.name;
-        _circleDot = CreateCirclePoint($"{objectName} End Point").transform;
-        _circleStartDot = CreateCirclePoint($"{objectName} Start Point");
+        Color color = _lineRenderer.material.color;
+        _circleDot = CreateCirclePoint(color, $"{objectName} End Point").transform;
+        _circleStartDot = CreateCirclePoint(color, $"{objectName} Start Point");
         StartCoroutine(UpdateMousePosition());
     }
 
-    private GameObject CreateCirclePoint(string name = "")
+    private GameObject CreateCirclePoint(Color color, string name = "")
     {
         GameObject circleDot = Instantiate(_circleDotPrefab, Vector3.zero, Quaternion.identity);
+        circleDot.GetComponent<SpriteRenderer>().color = color;
         circleDot.SetActive(false);
 
         if (name.Length > 0)

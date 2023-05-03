@@ -16,12 +16,12 @@ public class Character : MonoBehaviour
 
     private void OnEnable()
     {
-        _level.onAllLinesFinishedEvent += StartMoving;
+        _level.onAllLinesFinished += StartMoving;
     }
 
     private void OnDisable()
     {
-        _level.onAllLinesFinishedEvent -= StartMoving;
+        _level.onAllLinesFinished -= StartMoving;
     }
 
     private void StartMoving()

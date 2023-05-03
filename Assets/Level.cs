@@ -4,7 +4,7 @@ using UnityEngine;
 public delegate void AllLinesFinished();
 public class Level : MonoBehaviour
 {
-    public event AllLinesFinished onAllLinesFinishedEvent = delegate{ };
+    public event AllLinesFinished onAllLinesFinished = delegate{ };
     public static Level singleton;
     [SerializeField] private List<DrawLine> _lines = new();
     private int _finishedLinesCount = 0;
@@ -28,7 +28,7 @@ public class Level : MonoBehaviour
         _finishedLinesCount++;
 
         if (_finishedLinesCount.Equals(_lines.Count))
-            onAllLinesFinishedEvent.Invoke();
+            onAllLinesFinished.Invoke();
     }
 
     private void OnDisable()
