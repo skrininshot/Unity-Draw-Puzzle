@@ -1,10 +1,10 @@
 using System.Collections;
 using UnityEngine;
 
-public delegate void OnFinishReached();
+public delegate void FinishReached();
 public class DrawLine : MonoBehaviour
 {
-    public event OnFinishReached OnFinishReachedEvent = delegate { };
+    public event FinishReached onFinishReached = delegate { };
 
     [Header ("Points")]
     [SerializeField] private Point _startPoint;
@@ -127,7 +127,7 @@ public class DrawLine : MonoBehaviour
         _circleDot.position = endPosition;
         AddPoint(endPosition);
 
-        OnFinishReachedEvent.Invoke();
+        onFinishReached.Invoke();
     }
 
     private void CancelLine()
