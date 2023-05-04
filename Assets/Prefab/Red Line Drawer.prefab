@@ -57,7 +57,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6445609235447964884, guid: 036501b8a06b0414893413dba80f0423, type: 3}
       propertyPath: m_Name
-      value: Red Drawer Variant
+      value: Red Line Drawer
+      objectReference: {fileID: 0}
+    - target: {fileID: 6445609235447964885, guid: 036501b8a06b0414893413dba80f0423, type: 3}
+      propertyPath: _simplifyToleranceAfterDrawing
+      value: 0.1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 036501b8a06b0414893413dba80f0423, type: 3}

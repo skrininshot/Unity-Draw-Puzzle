@@ -885,6 +885,14 @@ PrefabInstance:
     - target: {fileID: 2122716512090345628, guid: 3e0b88afff8adac4c96752618f890fef, type: 3}
       propertyPath: _drawLine
       value: 
+      objectReference: {fileID: 1897937563}
+    - target: {fileID: 2122716512090345628, guid: 3e0b88afff8adac4c96752618f890fef, type: 3}
+      propertyPath: _walkTime
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 2122716512090345628, guid: 3e0b88afff8adac4c96752618f890fef, type: 3}
+      propertyPath: _moveDuration
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3850217587623154280, guid: 3e0b88afff8adac4c96752618f890fef, type: 3}
       propertyPath: m_RootOrder
@@ -1086,6 +1094,14 @@ PrefabInstance:
     - target: {fileID: 7811376527688839296, guid: ac73f85430ed2374fa76888263ba7018, type: 3}
       propertyPath: _drawLine
       value: 
+      objectReference: {fileID: 659575888}
+    - target: {fileID: 7811376527688839296, guid: ac73f85430ed2374fa76888263ba7018, type: 3}
+      propertyPath: _walkTime
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 7811376527688839296, guid: ac73f85430ed2374fa76888263ba7018, type: 3}
+      propertyPath: _moveDuration
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8746179009677183707, guid: ac73f85430ed2374fa76888263ba7018, type: 3}
       propertyPath: m_Name

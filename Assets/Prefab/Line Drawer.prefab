@@ -144,5 +144,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _startPoint: {fileID: 0}
   _endPoint: {fileID: 0}
+  _simplifyToleranceAfterDrawing: 0.1
   _mousePositionUpdateFreq: 0.032
   _circleDotPrefab: {fileID: 133165013408643032, guid: 0efea46b6c4b49f4ea1b2704f3089702, type: 3}

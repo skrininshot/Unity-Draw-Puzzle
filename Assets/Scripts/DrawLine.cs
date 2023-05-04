@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public delegate void FinishReached();
@@ -11,6 +12,7 @@ public class DrawLine : MonoBehaviour
     [SerializeField] private Point _endPoint;
 
     [Header ("Line Properties")]
+    [SerializeField, Min (0.1f)] private float _simplifyToleranceAfterDrawing = 0.25f;
     [SerializeField, Min(0.01f)] private float _mousePositionUpdateFreq = 0.1f;
     [SerializeField] private GameObject _circleDotPrefab;
     
@@ -19,15 +21,25 @@ public class DrawLine : MonoBehaviour
     private Transform _circleDot;
     private GameObject _circleStartDot;
     private bool _isDrawing;
+    public List<Vector3> linePositions
+    {
+        get
+        {
+            return new List<Vector3>(_linePositions);
+        }
+    }
+    private List<Vector3> _linePositions = new();
 
     private void Awake()
     {
         _lineRenderer = GetComponent<LineRenderer>();
         _camera = Camera.main;
+
         string objectName = gameObject.name;
         Color color = _lineRenderer.material.color;
         _circleDot = CreateCirclePoint(color, $"{objectName} End Point").transform;
         _circleStartDot = CreateCirclePoint(color, $"{objectName} Start Point");
+
         StartCoroutine(UpdateMousePosition());
     }
 
@@ -105,6 +117,11 @@ public class DrawLine : MonoBehaviour
     private void EndDrawing()
     {
         _isDrawing = false;
+
+        for (int i = 0; i < _lineRenderer.positionCount; i++)
+            _linePositions.Add(_lineRenderer.GetPosition(i));
+
+        _lineRenderer.Simplify(_simplifyToleranceAfterDrawing);
     }
 
     private void AddPoint(Vector3 pointPosition)
@@ -120,22 +137,23 @@ public class DrawLine : MonoBehaviour
     }
 
     private void Finish()
-    {
-        Debug.Log("You have reached the finish!");
+    { 
         StopCoroutine(UpdateMousePosition());
-        EndDrawing();
-
+        
         Vector3 endPosition = _endPoint.transform.position;
         _circleDot.position = endPosition;
         AddPoint(endPosition);
-
+        EndDrawing();
+        
         onFinishReached.Invoke();
+        Debug.Log("You have reached the finish!");
     }
 
     private void CancelLine()
     {
         EndDrawing();
         _lineRenderer.positionCount = 0;
+        _linePositions.Clear();
         _circleDot.gameObject.SetActive(false);
         _circleStartDot.SetActive(false);
     }
