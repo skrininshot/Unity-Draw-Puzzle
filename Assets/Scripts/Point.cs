@@ -1,20 +1,31 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-
-public class Point : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class Point : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
 {
     [HideInInspector] public bool isTrigger { get; private set; }
+    [SerializeField] private PointType _type;
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        isTrigger = true;
-        Debug.Log($"Entered {gameObject.name}");
+        if (_type.Equals(PointType.End))
+            isTrigger = true;
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        if (_type.Equals(PointType.Start))
+            isTrigger = true;
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         isTrigger = false;
-        Debug.Log($"Exit {gameObject.name}");
     }
+}
+
+public enum PointType
+{
+    Start,
+    End
 }

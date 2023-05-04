@@ -170,6 +170,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fb7ac82c6e1afe478fca4dcdcd0ee6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _type: 1
 --- !u!212 &99310558
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -284,6 +285,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fb7ac82c6e1afe478fca4dcdcd0ee6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _type: 0
 --- !u!212 &135979614
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -449,6 +451,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fb7ac82c6e1afe478fca4dcdcd0ee6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _type: 1
 --- !u!58 &204742973
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -808,6 +811,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fb7ac82c6e1afe478fca4dcdcd0ee6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _type: 0
 --- !u!58 &1021068083
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -948,6 +952,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3850217587623154280, guid: 3e0b88afff8adac4c96752618f890fef, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7557245328620910376, guid: 3e0b88afff8adac4c96752618f890fef, type: 3}
+      propertyPath: m_FlipX
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

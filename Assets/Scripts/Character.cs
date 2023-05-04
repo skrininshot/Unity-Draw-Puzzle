@@ -7,6 +7,7 @@ public class Character : MonoBehaviour
     [SerializeField] private float _moveDuration = 2f;
     private bool _isMoving;
     private Animator _animator;
+    private SpriteRenderer _sprite;
     private Level _level;
     private List<Vector3> _linePositions;
     private float _zAxis;
@@ -17,6 +18,7 @@ public class Character : MonoBehaviour
     private void Awake()
     {
         _animator = GetComponent<Animator>();
+        _sprite = GetComponent<SpriteRenderer>();
         _level = Level.singleton; 
         _zAxis = transform.position.z;
     }
@@ -56,6 +58,10 @@ public class Character : MonoBehaviour
 
         Vector3 currentTargetPosition = GetTargetPosition(_currentDistance);
         currentTargetPosition.z = _zAxis;
+
+        Vector3 direction = currentTargetPosition - transform.position;
+        _sprite.flipX = (direction.x > 0);
+        
         transform.position = currentTargetPosition;
 
         _totalTime += Time.deltaTime;

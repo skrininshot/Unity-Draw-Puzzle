@@ -8,6 +8,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 6445609235447964882, guid: 036501b8a06b0414893413dba80f0423, type: 3}
+      propertyPath: m_DynamicOccludee
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6445609235447964882, guid: 036501b8a06b0414893413dba80f0423, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: c756faecb83812140800a574638e4789, type: 2}

@@ -138,7 +138,7 @@ public class DrawLine : MonoBehaviour
 
     private void Finish()
     { 
-        StopCoroutine(UpdateMousePosition());
+        StopAllCoroutines();
         
         Vector3 endPosition = _endPoint.transform.position;
         _circleDot.position = endPosition;
