@@ -6,10 +6,8 @@ public delegate void FinishReached();
 public class DrawLine : MonoBehaviour
 {
     public event FinishReached onFinishReached = delegate { };
-
-    [Header ("Points")]
-    [SerializeField] private Point _startPoint;
-    [SerializeField] private Point _endPoint;
+    private Point _startPoint;
+    private Point _endPoint;
 
     [Header ("Line Properties")]
     [SerializeField, Min (0.1f)] private float _simplifyToleranceAfterDrawing = 0.25f;
@@ -34,23 +32,26 @@ public class DrawLine : MonoBehaviour
     {
         _lineRenderer = GetComponent<LineRenderer>();
         _camera = Camera.main;
+    }
 
-        string objectName = gameObject.name;
-        Color color = _lineRenderer.material.color;
-        _circleDot = CreateCirclePoint(color, $"{objectName} End Point").transform;
-        _circleStartDot = CreateCirclePoint(color, $"{objectName} Start Point");
+    public void SetLine(Color color, Point startPoint, Point endPoint)
+    {
+        _circleDot = CreateCirclePoint(color).transform;
+        _circleStartDot = CreateCirclePoint(color);
+        _lineRenderer.startColor = color;
+        _lineRenderer.endColor = color;
+
+        _startPoint = startPoint;
+        _endPoint = endPoint;
 
         StartCoroutine(UpdateMousePosition());
     }
 
-    private GameObject CreateCirclePoint(Color color, string name = "")
+    private GameObject CreateCirclePoint(Color color)
     {
         GameObject circleDot = Instantiate(_circleDotPrefab, Vector3.zero, Quaternion.identity);
         circleDot.GetComponent<SpriteRenderer>().color = color;
         circleDot.SetActive(false);
-
-        if (name.Length > 0)
-            circleDot.name = name;
 
         return circleDot;
     }

@@ -1,10 +1,12 @@
 using UnityEngine;
 using System.Collections.Generic;
 
+[RequireComponent(typeof(Point))]
 public class Character : MonoBehaviour
 {
-    [SerializeField] private DrawLine _drawLine;
+    public Point point { get; private set; }
     [SerializeField] private float _moveDuration = 2f;
+    private DrawLine _line;
     private bool _isMoving;
     private Animator _animator;
     private SpriteRenderer _sprite;
@@ -19,6 +21,7 @@ public class Character : MonoBehaviour
     {
         _animator = GetComponent<Animator>();
         _sprite = GetComponent<SpriteRenderer>();
+        point = GetComponent<Point>();
         _level = Level.singleton; 
         _zAxis = transform.position.z;
     }
@@ -26,24 +29,31 @@ public class Character : MonoBehaviour
     private void OnEnable()
     {
         _level.onAllLinesFinished += StartMoving;
+        _level.onGameOver += StopMoving;
     }
 
     private void OnDisable()
     {
         _level.onAllLinesFinished -= StartMoving;
+        _level.onGameOver -= StopMoving;
+    }
+
+    public void SetLine(DrawLine line)
+    {
+        _line = line;
     }
 
     private void StartMoving()
     {
         _isMoving = true;
         _animator.SetBool("isMoving", true);
-        _linePositions = _drawLine.linePositions;
+        _linePositions = _line.linePositions;
 
         for (int i = 1; i < _linePositions.Count; i++)
             _totalLength += Vector3.Distance(_linePositions[i - 1], _linePositions[i]);
     }
 
-    private void StopMoving()
+    public void StopMoving()
     {
         _isMoving = false;
         _animator.SetBool("isMoving", false);
@@ -61,13 +71,19 @@ public class Character : MonoBehaviour
 
         Vector3 direction = currentTargetPosition - transform.position;
         _sprite.flipX = (direction.x > 0);
-        
+
         transform.position = currentTargetPosition;
 
         _totalTime += Time.deltaTime;
 
         if (_currentDistance >= _totalLength)
             StopMoving();
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.TryGetComponent<Character>(out var character))
+            _level.GameOver();
     }
 
     private Vector3 GetTargetPosition(float distance)
