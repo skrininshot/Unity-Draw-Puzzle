@@ -103,6 +103,7 @@ public class DrawLine : MonoBehaviour
         _circleStartDot.SetActive(true);
 
         Vector3 startPosition = _startPoint.transform.position;
+        startPosition.z = 0.1f;
         _circleStartDot.transform.position = startPosition;
         AddPoint(startPosition);
     }

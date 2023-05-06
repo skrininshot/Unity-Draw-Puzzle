@@ -142,6 +142,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cb7376a535b42e43a3363b86ec11906, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _simplifyToleranceAfterDrawing: 0.2
+  _simplifyToleranceAfterDrawing: 0.1
   _mousePositionUpdateFreq: 0.04
   _circleDotPrefab: {fileID: 133165013408643032, guid: 0efea46b6c4b49f4ea1b2704f3089702, type: 3}
