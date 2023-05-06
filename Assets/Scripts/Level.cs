@@ -4,15 +4,18 @@ using UnityEngine;
 
 public delegate void AllLinesFinished();
 public delegate void GameOver();
+public delegate void Victory();
 public class Level : MonoBehaviour
 {
     public event AllLinesFinished onAllLinesFinished = delegate{ };
     public event GameOver onGameOver = delegate{ };
+    public event GameOver onVictory = delegate{ };
     public static Level singleton;
     [SerializeField] private List<LineTypeOption> _lineTypes = new();
     private List<DrawLine> _lines = new();
     private int _finishedLinesCount = 0;
     private bool _isGameOver;
+    private bool _isVictory;
 
     private void Awake()
     {
@@ -60,6 +63,15 @@ public class Level : MonoBehaviour
         {
             _isGameOver = true;
             onGameOver.Invoke();
+        }       
+    }
+
+    public void Victory()
+    {
+        if (!_isVictory)
+        {
+            _isVictory = true;
+            onVictory.Invoke();
         }       
     }
 }

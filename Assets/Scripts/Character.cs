@@ -77,7 +77,10 @@ public class Character : MonoBehaviour
         _totalTime += Time.deltaTime;
 
         if (_currentDistance >= _totalLength)
+        {
             StopMoving();
+            _level.Victory();
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
