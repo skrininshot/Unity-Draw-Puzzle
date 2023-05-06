@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 public class SceneController : MonoBehaviour
 { 
     [SerializeField] private GameObject _victoryPopup;
+    [SerializeField] private GameObject _gameOverPopup;
     private Animator _animator;
     private Level _level;
     private int _nextSceneBuildIndex;
@@ -18,18 +19,29 @@ public class SceneController : MonoBehaviour
         _level = Level.singleton;
 
         if (_level is not null)
+        {
             _level.onVictory += Victory;
+            _level.onGameOver += GameOver;
+        }
     }
 
     private void OnDisable()
     {
         if (_level is not null)
+        {
             _level.onVictory -= Victory;
+            _level.onGameOver -= GameOver;
+        }
     }
 
     public void BackToMenu()
     {
         FadeInScene(0);
+    }
+
+    private void GameOver()
+    {
+        _gameOverPopup.SetActive(true);
     }
 
     private void Victory()
