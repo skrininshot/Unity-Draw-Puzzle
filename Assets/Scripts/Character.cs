@@ -2,7 +2,8 @@ using UnityEngine;
 using System.Collections.Generic;
 
 [RequireComponent(typeof(Point))]
-public class Character : MonoBehaviour
+[RequireComponent(typeof(CreateLine))]
+public class Character : MonoBehaviour, ICollidable
 {
     public Point point { get; private set; }
     [SerializeField] private float _moveDuration = 2f;
@@ -23,7 +24,9 @@ public class Character : MonoBehaviour
         _sprite = GetComponent<SpriteRenderer>();
         point = GetComponent<Point>();
         _level = Level.singleton; 
+
         _zAxis = transform.position.z;
+        transform.SetParent(null);
     }
 
     private void OnEnable()
@@ -85,7 +88,7 @@ public class Character : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.TryGetComponent<Character>(out var character))
+        if (other.TryGetComponent<ICollidable>(out var collidable))
             _level.GameOver();
     }
 

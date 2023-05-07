@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 7557245328620910376}
   - component: {fileID: 6629326734475308656}
   - component: {fileID: 2122716512090345628}
-  - component: {fileID: 5642254311636971268}
   - component: {fileID: -6919156444697714032}
   - component: {fileID: -3012724932359335810}
+  - component: {fileID: 4565445529267968227}
+  - component: {fileID: 4014635958366956673}
   m_Layer: 0
   m_Name: Rock Character
   m_TagString: Untagged
@@ -30,7 +31,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 128752549006533019}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.83307, y: 4.405114, z: -9.150036}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 10, y: 10, z: 10}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -122,20 +123,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15dde5d35f7bddc40a367e935daef8bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveDuration: 2
---- !u!114 &5642254311636971268
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 128752549006533019}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2fb7ac82c6e1afe478fca4dcdcd0ee6e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _type: 0
+  _moveDuration: 10
 --- !u!58 &-6919156444697714032
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -173,3 +161,30 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &4565445529267968227
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 128752549006533019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fb7ac82c6e1afe478fca4dcdcd0ee6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <type>k__BackingField: 0
+--- !u!114 &4014635958366956673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 128752549006533019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf7ae520cf4f4b54eb49308ada1597c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _color: {r: 0, g: 0, b: 0, a: 0}
+  _points: []

@@ -11,7 +11,6 @@ public class Level : MonoBehaviour
     public event GameOver onGameOver = delegate{ };
     public event GameOver onVictory = delegate{ };
     public static Level singleton;
-    [SerializeField] private List<LineTypeOption> _lineTypes = new();
     private List<DrawLine> _lines = new();
     private int _finishedLinesCount = 0;
     private bool _isGameOver;
@@ -23,16 +22,6 @@ public class Level : MonoBehaviour
             Destroy(gameObject);
         else
             singleton = this;
-    }
-
-    private void Start()
-    {
-        foreach (LineTypeOption option in _lineTypes)
-        {
-            DrawLine line = option.Instantiate();
-            _lines.Add(line);
-            line.onFinishReached += OnLineFinished;
-        }
     }
 
     private void OnEnable()
@@ -66,6 +55,12 @@ public class Level : MonoBehaviour
         }       
     }
 
+    public void AddLine(DrawLine line)
+    {
+        _lines.Add(line);
+        line.onFinishReached += OnLineFinished;
+    }
+
     public void Victory()
     {
         if (!_isVictory)
@@ -73,23 +68,5 @@ public class Level : MonoBehaviour
             _isVictory = true;
             onVictory.Invoke();
         }       
-    }
-}
-
-[System.Serializable]
-public class LineTypeOption
-{
-    [SerializeField] private Color _color;
-    [SerializeField] private Character _character;
-    [SerializeField] private Point _endPoint;
-
-    public DrawLine Instantiate()
-    {
-        Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefabs/LineDrawer.prefab", typeof(DrawLine));
-        DrawLine line = GameObject.Instantiate(prefab) as DrawLine;
-        line.SetLine(_color, _character.point, _endPoint);
-        _character.SetLine(line);
-
-        return line;
     }
 }

@@ -12,6 +12,7 @@ public class SceneController : MonoBehaviour
     private void Awake()
     {
         _animator = GetComponent<Animator>();
+        GetComponent<UnityEngine.UI.Image>().enabled = true;
     }
 
     private void Start()

@@ -7,7 +7,6 @@ public class DrawLine : MonoBehaviour
 {
     public event FinishReached onFinishReached = delegate { };
     private Point _startPoint;
-    private Point _endPoint;
 
     [Header ("Line Properties")]
     [SerializeField, Min (0.1f)] private float _simplifyToleranceAfterDrawing = 0.25f;
@@ -27,6 +26,7 @@ public class DrawLine : MonoBehaviour
         }
     }
     private List<Vector3> _linePositions = new();
+    private EndPointChecker _endPointChecker;
 
     private void Awake()
     {
@@ -34,17 +34,25 @@ public class DrawLine : MonoBehaviour
         _camera = Camera.main;
     }
 
-    public void SetLine(Color color, Point startPoint, Point endPoint)
+    public void SetLine(Color color, Point startPoint, List<Point> points)
     {
-        _circleDot = CreateCirclePoint(color).transform;
         _circleStartDot = CreateCirclePoint(color);
-        _lineRenderer.startColor = color;
-        _lineRenderer.endColor = color;
+        _circleDot = CreateCirclePoint(color).transform;
+        SetColor(color);
 
+        _endPointChecker = _circleDot.gameObject.AddComponent<EndPointChecker>();
+        _endPointChecker.Set(points);
+        _endPointChecker.onGetPoint += Finish;
+        
         _startPoint = startPoint;
-        _endPoint = endPoint;
 
         StartCoroutine(UpdateMousePosition());
+    }
+
+    private void SetColor(Color color)
+    {
+        _lineRenderer.startColor = color;
+        _lineRenderer.endColor = color;
     }
 
     private GameObject CreateCirclePoint(Color color)
@@ -88,9 +96,6 @@ public class DrawLine : MonoBehaviour
             Vector3 mousePosition = GetMousePosition();
             _circleDot.position = mousePosition;
             AddPoint(mousePosition);
-
-            if (_endPoint.isTrigger)
-                Finish();
         }
     }
 
@@ -103,7 +108,6 @@ public class DrawLine : MonoBehaviour
         _circleStartDot.SetActive(true);
 
         Vector3 startPosition = _startPoint.transform.position;
-        startPosition.z = 0.1f;
         _circleStartDot.transform.position = startPosition;
         AddPoint(startPosition);
     }
@@ -138,17 +142,17 @@ public class DrawLine : MonoBehaviour
         }
     }
 
-    private void Finish()
+    private void Finish(Point point)
     { 
         StopAllCoroutines();
         
-        Vector3 endPosition = _endPoint.transform.position;
+        Vector3 endPosition = point.transform.position;
+        endPosition.z = 0;
         _circleDot.position = endPosition;
         AddPoint(endPosition);
         EndDrawing();
         
         onFinishReached.Invoke();
-        Debug.Log("You have reached the finish!");
     }
 
     private void CancelLine()
@@ -158,5 +162,10 @@ public class DrawLine : MonoBehaviour
         _linePositions.Clear();
         _circleDot.gameObject.SetActive(false);
         _circleStartDot.SetActive(false);
+    }
+
+    private void OnDisable()
+    {
+        _endPointChecker.onGetPoint -= Finish;
     }
 }

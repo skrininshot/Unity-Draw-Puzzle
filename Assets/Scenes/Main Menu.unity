@@ -615,6 +615,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _victoryPopup: {fileID: 0}
+  _gameOverPopup: {fileID: 0}
 --- !u!1 &1277882717726221999
 GameObject:
   m_ObjectHideFlags: 0
