@@ -5,7 +5,6 @@ using System.Collections.Generic;
 [RequireComponent(typeof(CreateLine))]
 public class Character : MonoBehaviour, ICollidable
 {
-    public Point point { get; private set; }
     [SerializeField] private float _moveDuration = 2f;
     private DrawLine _line;
     private bool _isMoving;
@@ -22,7 +21,6 @@ public class Character : MonoBehaviour, ICollidable
     {
         _animator = GetComponent<Animator>();
         _sprite = GetComponent<SpriteRenderer>();
-        point = GetComponent<Point>();
         _level = Level.singleton; 
 
         _zAxis = transform.position.z;

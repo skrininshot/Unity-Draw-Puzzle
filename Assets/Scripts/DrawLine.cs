@@ -27,6 +27,7 @@ public class DrawLine : MonoBehaviour
     }
     private List<Vector3> _linePositions = new();
     private EndPointChecker _endPointChecker;
+    private Vector3 _startPointPosition;
 
     private void Awake()
     {
@@ -38,6 +39,9 @@ public class DrawLine : MonoBehaviour
     {
         _circleStartDot = CreateCirclePoint(color);
         _circleDot = CreateCirclePoint(color).transform;
+        _startPointPosition = startPoint.transform.position;
+        _startPointPosition.z = 0;
+
         SetColor(color);
 
         _endPointChecker = _circleDot.gameObject.AddComponent<EndPointChecker>();
@@ -107,9 +111,7 @@ public class DrawLine : MonoBehaviour
         _circleDot.gameObject.SetActive(true);
         _circleStartDot.SetActive(true);
 
-        Vector3 startPosition = _startPoint.transform.position;
-        _circleStartDot.transform.position = startPosition;
-        AddPoint(startPosition);
+        AddPoint( _startPointPosition);
     }
 
     private Vector3 GetMousePosition()
