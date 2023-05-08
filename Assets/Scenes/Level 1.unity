@@ -379,6 +379,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 9163657844091852977, guid: 0fac1056a1c21eb4d87b40e1d13b6ac0, type: 3}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 9220245766852489090, guid: 0fac1056a1c21eb4d87b40e1d13b6ac0, type: 3}
       propertyPath: m_RootOrder
       value: 6
@@ -431,7 +435,7 @@ PrefabInstance:
   m_SourcePrefab: {fileID: 100100000, guid: 0fac1056a1c21eb4d87b40e1d13b6ac0, type: 3}
 --- !u!114 &1030615402 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 9220245766852489100, guid: 0fac1056a1c21eb4d87b40e1d13b6ac0, type: 3}
+  m_CorrespondingSourceObject: {fileID: 1641750169976097966, guid: 0fac1056a1c21eb4d87b40e1d13b6ac0, type: 3}
   m_PrefabInstance: {fileID: 1030615401}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}

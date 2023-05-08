@@ -54,7 +54,7 @@ public class Character : MonoBehaviour, ICollidable
             _totalLength += Vector3.Distance(_linePositions[i - 1], _linePositions[i]);
     }
 
-    public void StopMoving()
+    public void StopMoving(GameOverReason reason = 0)
     {
         _isMoving = false;
         _animator.SetBool("isMoving", false);
@@ -87,7 +87,7 @@ public class Character : MonoBehaviour, ICollidable
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.TryGetComponent<ICollidable>(out var collidable))
-            _level.GameOver();
+            _level.GameOver(GameOverReason.HitObstacle);
     }
 
     private Vector3 GetTargetPosition(float distance)

@@ -12,7 +12,7 @@ public class DrawLine : MonoBehaviour
     [SerializeField, Min (0.1f)] private float _simplifyToleranceAfterDrawing = 0.25f;
     [SerializeField, Min(0.01f)] private float _mousePositionUpdateFreq = 0.1f;
     [SerializeField] private GameObject _circleDotPrefab;
-    
+
     private LineRenderer _lineRenderer;
     private Camera _camera;
     private Transform _circleDot;
@@ -37,10 +37,9 @@ public class DrawLine : MonoBehaviour
 
     public void SetLine(Color color, Point startPoint, List<Point> points)
     {
-        _circleStartDot = CreateCirclePoint(color);
-        _circleDot = CreateCirclePoint(color).transform;
         _startPointPosition = startPoint.transform.position;
-        _startPointPosition.z = 0;
+        _circleStartDot = CreateCirclePoint(color, _startPointPosition);
+        _circleDot = CreateCirclePoint(color, Vector3.zero).transform;
 
         SetColor(color);
 
@@ -59,9 +58,10 @@ public class DrawLine : MonoBehaviour
         _lineRenderer.endColor = color;
     }
 
-    private GameObject CreateCirclePoint(Color color)
+    private GameObject CreateCirclePoint(Color color, Vector3 position)
     {
-        GameObject circleDot = Instantiate(_circleDotPrefab, Vector3.zero, Quaternion.identity);
+        position.z = 0;
+        GameObject circleDot = Instantiate(_circleDotPrefab, position, Quaternion.identity);
         circleDot.GetComponent<SpriteRenderer>().color = color;
         circleDot.SetActive(false);
 
@@ -98,7 +98,6 @@ public class DrawLine : MonoBehaviour
         if (_isDrawing)
         {
             Vector3 mousePosition = GetMousePosition();
-            _circleDot.position = mousePosition;
             AddPoint(mousePosition);
         }
     }
@@ -110,8 +109,8 @@ public class DrawLine : MonoBehaviour
         _isDrawing = true;
         _circleDot.gameObject.SetActive(true);
         _circleStartDot.SetActive(true);
-
-        AddPoint( _startPointPosition);
+        
+        AddPoint(_startPointPosition);
     }
 
     private Vector3 GetMousePosition()
@@ -136,12 +135,7 @@ public class DrawLine : MonoBehaviour
     {   
         _lineRenderer.positionCount++;
         _lineRenderer.SetPosition(_lineRenderer.positionCount - 1, pointPosition);
-
-        if (!_circleStartDot.activeSelf)
-        {
-            _circleStartDot.SetActive(true);
-            _circleStartDot.transform.position = pointPosition;
-        }
+        _circleDot.position = pointPosition;
     }
 
     private void Finish(Point point)

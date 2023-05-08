@@ -14,10 +14,10 @@ public class CreateLine : MonoBehaviour
     public DrawLine Instantiate()
     {
         Character character = GetComponent<Character>();
-        Object prefab = UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/Prefabs/LineDrawer.prefab", typeof(DrawLine));
+        Object prefab = UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Line/LineDrawer.prefab", typeof(DrawLine));
         DrawLine line = GameObject.Instantiate(prefab) as DrawLine;
         Point point = GetComponent<Point>();
-        
+
         line.SetLine(_color, point, _points);
         character.SetLine(line);
         Level.singleton.AddLine(line);

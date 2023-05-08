@@ -40,7 +40,7 @@ public class SceneController : MonoBehaviour
         FadeInScene(0);
     }
 
-    private void GameOver()
+    private void GameOver(GameOverReason reason = 0)
     {
         _gameOverPopup.SetActive(true);
     }

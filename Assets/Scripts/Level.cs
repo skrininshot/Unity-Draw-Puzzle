@@ -3,13 +3,13 @@ using UnityEditor;
 using UnityEngine;
 
 public delegate void AllLinesFinished();
-public delegate void GameOver();
+public delegate void GameOver(GameOverReason reason);
 public delegate void Victory();
 public class Level : MonoBehaviour
 {
     public event AllLinesFinished onAllLinesFinished = delegate{ };
     public event GameOver onGameOver = delegate{ };
-    public event GameOver onVictory = delegate{ };
+    public event Victory onVictory = delegate{ };
     public static Level singleton;
     private List<DrawLine> _lines = new();
     private int _finishedLinesCount = 0;
@@ -46,12 +46,12 @@ public class Level : MonoBehaviour
             onAllLinesFinished.Invoke();
     }
 
-    public void GameOver()
+    public void GameOver(GameOverReason reason)
     {
         if (!_isGameOver)
         {
             _isGameOver = true;
-            onGameOver.Invoke();
+            onGameOver.Invoke(reason);
         }       
     }
 
@@ -69,4 +69,10 @@ public class Level : MonoBehaviour
             onVictory.Invoke();
         }       
     }
+}
+
+public enum GameOverReason
+{
+    HitAnother,
+    HitObstacle
 }
