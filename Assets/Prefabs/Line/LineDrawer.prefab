@@ -43,7 +43,7 @@ LineRenderer:
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
+  m_DynamicOccludee: 0
   m_StaticShadowCaster: 0
   m_MotionVectors: 0
   m_LightProbeUsage: 0
@@ -83,7 +83,7 @@ LineRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.48809534
+        value: 0.5061722
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -125,7 +125,7 @@ LineRenderer:
     numCornerVertices: 0
     numCapVertices: 0
     alignment: 1
-    textureMode: 0
+    textureMode: 1
     shadowBias: 0
     generateLightingData: 0
   m_UseWorldSpace: 0
@@ -142,6 +142,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cb7376a535b42e43a3363b86ec11906, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _simplifyToleranceAfterDrawing: 0.25
-  _mousePositionUpdateFreq: 0.04
+  _simplifyToleranceAfterDrawing: 0.2
+  _mousePositionUpdateFreq: 0.05
   _circleDotPrefab: {fileID: 133165013408643032, guid: 0efea46b6c4b49f4ea1b2704f3089702, type: 3}

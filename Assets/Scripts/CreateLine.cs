@@ -5,6 +5,7 @@ public class CreateLine : MonoBehaviour
 {
     [SerializeField] private Color _color;
     [SerializeField] private List<Point> _points = new();
+    [SerializeField] private DrawLine _linePrefab;
 
     private void Start()
     {
@@ -14,8 +15,7 @@ public class CreateLine : MonoBehaviour
     public DrawLine Instantiate()
     {
         Character character = GetComponent<Character>();
-        Object prefab = UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Line/LineDrawer.prefab", typeof(DrawLine));
-        DrawLine line = GameObject.Instantiate(prefab) as DrawLine;
+        DrawLine line = GameObject.Instantiate(_linePrefab);
         Point point = GetComponent<Point>();
 
         line.SetLine(_color, point, _points);

@@ -272,3 +272,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _color: {r: 0, g: 0, b: 0, a: 0}
   _points: []
+  _linePrefab: {fileID: 6445609235447964885, guid: 036501b8a06b0414893413dba80f0423, type: 3}
