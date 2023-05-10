@@ -121,10 +121,6 @@ PrefabInstance:
       propertyPath: _walkTime
       value: 100
       objectReference: {fileID: 0}
-    - target: {fileID: 2122716512090345628, guid: 3e0b88afff8adac4c96752618f890fef, type: 3}
-      propertyPath: _moveDuration
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 3850217587623154280, guid: 3e0b88afff8adac4c96752618f890fef, type: 3}
       propertyPath: m_RootOrder
       value: 0

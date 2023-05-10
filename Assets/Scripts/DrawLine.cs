@@ -9,15 +9,14 @@ public class DrawLine : MonoBehaviour
     private Point _startPoint;
 
     [Header ("Line Properties")]
-    [SerializeField, Min (0.1f)] private float _simplifyToleranceAfterDrawing = 0.25f;
-    [SerializeField, Min(0.01f)] private float _mousePositionUpdateFreq = 0.1f;
+    
     [SerializeField] private GameObject _circleDotPrefab;
+    [SerializeField] private float _distanceBetweenPoints = 1f;
 
     private LineRenderer _lineRenderer;
     private Camera _camera;
     private Transform _circleDot;
     private GameObject _circleStartDot;
-    private bool _isDrawing;
     public List<Vector3> linePositions
     {
         get
@@ -28,6 +27,7 @@ public class DrawLine : MonoBehaviour
     private List<Vector3> _linePositions = new();
     private EndPointChecker _endPointChecker;
     private Vector3 _startPointPosition;
+    private bool _isDrawing;
 
     private void Awake()
     {
@@ -38,6 +38,7 @@ public class DrawLine : MonoBehaviour
     public void SetLine(Color color, Point startPoint, List<Point> points)
     {
         _startPointPosition = startPoint.transform.position;
+        _startPointPosition.z = 0;
         _circleStartDot = CreateCirclePoint(color, _startPointPosition);
         _circleDot = CreateCirclePoint(color, Vector3.zero).transform;
 
@@ -48,8 +49,6 @@ public class DrawLine : MonoBehaviour
         _endPointChecker.onGetPoint += Finish;
         
         _startPoint = startPoint;
-
-        StartCoroutine(UpdateMousePosition());
     }
 
     private void SetColor(Color color)
@@ -60,7 +59,6 @@ public class DrawLine : MonoBehaviour
 
     private GameObject CreateCirclePoint(Color color, Vector3 position)
     {
-        position.z = 0;
         GameObject circleDot = Instantiate(_circleDotPrefab, position, Quaternion.identity);
         circleDot.GetComponent<SpriteRenderer>().color = color;
         circleDot.SetActive(false);
@@ -68,44 +66,41 @@ public class DrawLine : MonoBehaviour
         return circleDot;
     }
 
-    private IEnumerator UpdateMousePosition()
+    private void Update()
     {
-        WaitForSeconds updateTime = new(_mousePositionUpdateFreq);
-
-        while (true)
-        {
-            Drawing();
+        if (Input.GetMouseButtonDown(0))
+        {   
+            StartDrawing();
             
-            yield return updateTime;
+            return;
         }
-    }
 
-    private void Drawing()
-    {
-        bool isClick = Input.GetMouseButton(0);
-
-        if (isClick)
+        if (Input.GetMouseButton(0))
         {
-            if (!_isDrawing)
-                StartDrawing();
-        } 
-        else
+            if (_isDrawing)
+            {
+                Vector3 mousePosition = GetMousePosition();
+
+                if (Vector3.Distance(mousePosition, 
+                _lineRenderer.GetPosition(_lineRenderer.positionCount - 1)) > _distanceBetweenPoints)
+                    AddPoint(mousePosition);
+            }
+
+            return;
+        }
+
+        if (Input.GetMouseButtonUp(0))
         {
             if (_isDrawing)
                 CancelLine();
-        }
-            
-        if (_isDrawing)
-        {
-            Vector3 mousePosition = GetMousePosition();
-            AddPoint(mousePosition);
+
+            return;
         }
     }
-
     private void StartDrawing()
     {
         if (!_startPoint.isTrigger) return;
-
+        
         _isDrawing = true;
         _circleDot.gameObject.SetActive(true);
         _circleStartDot.SetActive(true);
@@ -121,39 +116,30 @@ public class DrawLine : MonoBehaviour
         return mousePosition;
     }
 
-    private void EndDrawing()
-    {
-        _isDrawing = false;
-
-        for (int i = 0; i < _lineRenderer.positionCount; i++)
-            _linePositions.Add(_lineRenderer.GetPosition(i));
-
-        _lineRenderer.Simplify(_simplifyToleranceAfterDrawing);
-    }
-
     private void AddPoint(Vector3 pointPosition)
     {   
         _lineRenderer.positionCount++;
         _lineRenderer.SetPosition(_lineRenderer.positionCount - 1, pointPosition);
+        _linePositions.Add(_lineRenderer.GetPosition(_lineRenderer.positionCount - 1));
         _circleDot.position = pointPosition;
     }
 
     private void Finish(Point point)
     { 
-        StopAllCoroutines();
-        
+        _isDrawing = false;
+
         Vector3 endPosition = point.transform.position;
         endPosition.z = 0;
         _circleDot.position = endPosition;
         AddPoint(endPosition);
-        EndDrawing();
-        
+
         onFinishReached.Invoke();
+        enabled = false;
     }
 
     private void CancelLine()
     {
-        EndDrawing();
+        _isDrawing = false;
         _lineRenderer.positionCount = 0;
         _linePositions.Clear();
         _circleDot.gameObject.SetActive(false);
