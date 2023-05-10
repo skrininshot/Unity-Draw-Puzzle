@@ -93,8 +93,6 @@ public class DrawLine : MonoBehaviour
         {
             if (_isDrawing)
                 CancelLine();
-
-            return;
         }
     }
     private void StartDrawing()
