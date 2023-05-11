@@ -54,14 +54,15 @@ public class SceneController : MonoBehaviour
         int passedLevels = SaveSystem.passedLevels;
         int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
 
-        if (passedLevels < nextSceneIndex)
+        if (SceneManager.sceneCountInBuildSettings > nextSceneIndex && 
+        passedLevels < nextSceneIndex)
             SaveSystem.passedLevels = nextSceneIndex;
     }
 
     public void NextLevel()
     {
-        int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
-        int passedLevels = SaveSystem.passedLevels;
+        int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1; //8 + 1
+        int passedLevels = SaveSystem.passedLevels; //8
 
         if (SceneManager.sceneCountInBuildSettings > nextSceneIndex && passedLevels >= nextSceneIndex)
             FadeInScene(nextSceneIndex);
