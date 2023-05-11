@@ -24,6 +24,9 @@ public class SceneController : MonoBehaviour
             _level.onVictory += Victory;
             _level.onGameOver += GameOver;
         }
+
+        if (!_nextSceneBuildIndex.Equals(0))
+            SaveSystem.lastPlayedLevel = _nextSceneBuildIndex;
     }
 
     private void OnDisable()
@@ -48,19 +51,19 @@ public class SceneController : MonoBehaviour
     private void Victory()
     {
         _victoryPopup.SetActive(true);
-        int maxLevel = PlayerPrefs.GetInt("Max Level", 1);
+        int passedLevels = SaveSystem.passedLevels;
         int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
 
-        if (maxLevel < nextSceneIndex)
-            PlayerPrefs.SetInt("Max Level", nextSceneIndex);
+        if (passedLevels < nextSceneIndex)
+            SaveSystem.passedLevels = nextSceneIndex;
     }
 
     public void NextLevel()
     {
         int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
-        int maxLevel = PlayerPrefs.GetInt("Max Level", 1);
+        int passedLevels = SaveSystem.passedLevels;
 
-        if (SceneManager.sceneCountInBuildSettings > nextSceneIndex && maxLevel >= nextSceneIndex)
+        if (SceneManager.sceneCountInBuildSettings > nextSceneIndex && passedLevels >= nextSceneIndex)
             FadeInScene(nextSceneIndex);
     }
 
@@ -78,16 +81,17 @@ public class SceneController : MonoBehaviour
 
     public void SwitchScene()
     {
-        if (!_nextSceneBuildIndex.Equals(0))
-            PlayerPrefs.SetInt("Last Level", _nextSceneBuildIndex);
-
         SceneManager.LoadScene(_nextSceneBuildIndex);
     }
 
-    public void LastLevel()
+    public void LastPlayedLevel()
     {
-        int lastLevel = PlayerPrefs.GetInt("Last Level", 1);
-        FadeInScene(lastLevel);
+        FadeInScene(SaveSystem.lastPlayedLevel);
+    }
+
+    public void MaxPassedLevel()
+    {
+        FadeInScene(SaveSystem.passedLevels);
     }
 
     public void PreviousLevel()
@@ -100,7 +104,7 @@ public class SceneController : MonoBehaviour
 
     public void ClearData()
     {
-            PlayerPrefs.SetInt("Max Level", 1);
-            PlayerPrefs.SetInt("Last Level", 1);
+        SaveSystem.ClearData();
+        RestartLevel();
     }
 }
