@@ -1,2 +1,2 @@
-# Draw Line Puzzle Test Task
+# Unity Draw Puzzle
  ТЗ по игре Toilet Rush Race: Draw Puzzle
